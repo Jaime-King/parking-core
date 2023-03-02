@@ -13,14 +13,15 @@ func Init() {
     Log = logrus.New()
     Log.SetFormatter(&logrus.JSONFormatter{})
 
+    // Create the log folder
     if err := os.MkdirAll("logs", 0755); err != nil {
-        Log.Error(err)
+        Log.WithError(err).Error("Failed to create logs directory")
     }
 
     // Set the output to Stdout and a file
     file, err := os.OpenFile("logs/logfile.json", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
     if err != nil {
-		  panic("Failed to open log file")
+        Log.WithError(err).Error("Failed to create log file")
     }
 
     // Get logging level from the .env file, or default to DEBUG
