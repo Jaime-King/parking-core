@@ -8,7 +8,7 @@ import (
 
 var Log *logrus.Logger
 
-func Init() {
+func init() {
     // Create a new logger with a JSON formatter
     Log = logrus.New()
     Log.SetFormatter(&logrus.JSONFormatter{})
