@@ -3,6 +3,8 @@ package logger
 import (
 	"io"
 	"os"
+
+	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 )
 
@@ -23,6 +25,11 @@ func init() {
     if err != nil {
         Log.WithError(err).Error("Failed to create log file")
     }
+
+    // Load environment variables
+	if err := godotenv.Load(); err != nil {
+		Log.Error("Error while loading environment variables: ", err)
+	}
 
     // Get logging level from the .env file, or default to DEBUG
     level, err := logrus.ParseLevel(os.Getenv("LOG_LEVEL"))
